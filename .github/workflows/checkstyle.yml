@@ -21,4 +21,6 @@ jobs:
         run: wget -O checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.1/checkstyle-10.12.1-all.jar
 
       - name: Run Checkstyle
-        run: java -jar checkstyle.jar -c checkstyle.xml src/
+        run: |
+          ls -R   # Debug: list all files
+          java -jar checkstyle.jar -c checkstyle.xml .
