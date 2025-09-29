@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  checkstyle:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,9 +20,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Download Checkstyle
+      run: |
+        curl -L -o checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.18.2/checkstyle-10.18.2-all.jar
+
     - name: Run Checkstyle
       run: |
         echo "Running Checkstyle on Java files..."
         java -jar checkstyle.jar -c checkstyle.xml *.java
-        # 👆 If you move your files into src/, replace with:
-        # java -jar checkstyle.jar -c checkstyle.xml src
