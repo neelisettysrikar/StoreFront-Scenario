@@ -1,26 +1,28 @@
-name: Checkstyle Linter
+name: Java CI with Checkstyle
 
 on:
-  pull_request:
   push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  checkstyle:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-      - name: Download Checkstyle
-        run: wget -O checkstyle.jar https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.1/checkstyle-10.12.1-all.jar
-
-      - name: Run Checkstyle
-        run: |
-          ls -R   # Debug: list all files
-          java -jar checkstyle.jar -c checkstyle.xml .
+    - name: Run Checkstyle
+      run: |
+        echo "Running Checkstyle on Java files..."
+        java -jar checkstyle.jar -c checkstyle.xml *.java
+        # 👆 If you move your files into src/, replace with:
+        # java -jar checkstyle.jar -c checkstyle.xml src
