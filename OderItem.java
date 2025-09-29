@@ -1,6 +1,6 @@
 public class OderItem {
 
-	private int quantity;
-	private double price;
+    private int quantity;
+    private double price;
 
 }

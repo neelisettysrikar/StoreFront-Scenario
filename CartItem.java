@@ -1,6 +1,6 @@
 public class CartItem {
 
-	private int qauntity;
-	private double subtotal;
+    private int qauntity;
+    private double subtotal;
 
 }
