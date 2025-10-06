@@ -29,4 +29,8 @@ public class Order {
     public float getTotalAmount() {
         return totalAmount;
     }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
 }
