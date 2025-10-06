@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 public class CartTest {
 
     @Test
-    void testAddAndTotal() {
+    void testAddAndCalculateTotal() {
         Cart cart = new Cart();
-        Product p1 = new Product(1, "Laptop", "Gaming Laptop", 1000f, 10);
-        Product p2 = new Product(2, "Mouse", "Wireless Mouse", 50f, 5);
+        Product p1 = new Product(1, "Laptop", "Dell XPS", 1000f, 10);
+        Product p2 = new Product(2, "Mouse", "Logitech", 50f, 20);
 
         cart.addItem(p1);
         cart.addItem(p2);
