@@ -1,20 +1,27 @@
 public class Admin {
 
-	private str role;
+    private String role;
 
-	public void addProduct() {
-		// TODO - implement Admin.addProduct
-		throw new UnsupportedOperationException();
-	}
+    public Admin(String role) {
+        this.role = role;
+    }
 
-	public void removeProduct() {
-		// TODO - implement Admin.removeProduct
-		throw new UnsupportedOperationException();
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void manageUser() {
-		// TODO - implement Admin.manageUser
-		throw new UnsupportedOperationException();
-	}
+    public void addProduct() {
+        // TODO - implement Admin.addProduct
+        throw new UnsupportedOperationException();
+    }
 
+    public void removeProduct() {
+        // TODO - implement Admin.removeProduct
+        throw new UnsupportedOperationException();
+    }
+
+    public void manageUser() {
+        // TODO - implement Admin.manageUser
+        throw new UnsupportedOperationException();
+    }
 }
