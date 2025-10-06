@@ -1,21 +1,37 @@
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceMockTest {
 
     @Test
-    void testPaymentCalledWithCorrectAmount() {
-        PaymentProcessor mockPayment = mock(PaymentProcessor.class);
+    void testOrderProcessedUsingMock() {
+        PaymentProcessor processor = mock(PaymentProcessor.class);
+        when(processor.process(anyFloat())).thenReturn(true);
+
         Cart cart = new Cart();
-        cart.addProduct(new Product("Headphones", 200.0));
+        cart.addItem(new Product(1, "Keyboard", "Mechanical", 100f, 5));
 
-        when(mockPayment.process(200.0)).thenReturn(true);
-
-        OrderService service = new OrderService(mockPayment);
+        OrderServiceWithMock service = new OrderServiceWithMock(processor);
         boolean result = service.placeOrder(cart);
 
-        verify(mockPayment, times(1)).process(200.0);
         assertTrue(result);
+        verify(processor).process(100f);
+    }
+}
+
+interface PaymentProcessor {
+    boolean process(float amount);
+}
+
+class OrderServiceWithMock {
+    private PaymentProcessor paymentProcessor;
+
+    public OrderServiceWithMock(PaymentProcessor paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    public boolean placeOrder(Cart cart) {
+        return paymentProcessor.process(cart.getTotalPrice());
     }
 }
