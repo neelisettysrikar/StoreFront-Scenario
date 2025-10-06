@@ -1,11 +1,14 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Cart {
 
     private int cartID;
     private float totalPrice;
     private List<Product> items = new ArrayList<>();
+
+    public Cart(int cartID) {
+        this.cartID = cartID;
+    }
 
     public void addItem(Product product) {
         items.add(product);
@@ -28,7 +31,7 @@ public class Cart {
         return totalPrice;
     }
 
-    public int getItemCount() {
-        return items.size();
+    public List<Product> getItems() {
+        return items;
     }
 }
