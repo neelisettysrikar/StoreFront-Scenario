@@ -11,11 +11,13 @@ jobs:
 
       - name: Compile and Run Tests
         run: |
-          # Create output directory for class files
           mkdir -p out
-          
-          # Compile all Java files with classpath including JUnit + Mockito JARs
-          javac -cp ".:lib/junit-platform-console-standalone-1.9.3.jar:lib/mockito-core-5.4.0.jar" -d out *.java
-          
-          # Run all tests using the JUnit Console Launcher
-          java -jar lib/junit-platform-console-standalone-1.9.3.jar -cp "out:lib/mockito-core-5.4.0.jar" --scan-class-path
+
+          # Define classpath including all libraries
+          CP=".:lib/junit-platform-console-standalone-1.9.3.jar:lib/mockito-core-5.4.0.jar:lib/byte-buddy-1.14.4.jar:lib/byte-buddy-agent-1.14.4.jar"
+
+          # Compile Java files
+          javac -cp "$CP" -d out *.java
+
+          # Run JUnit tests
+          java -jar lib/junit-platform-console-standalone-1.9.3.jar -cp "out:$CP" --scan-class-path
