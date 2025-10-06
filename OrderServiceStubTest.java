@@ -1,19 +1,28 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDateTime;
 
-class PaymentProcessorStub {
-    boolean process(float amount) {
-        return true; // always succeeds
+class OrderServiceStub {
+    public Order getSampleOrder() {
+        return new Order(1, 5000f);
     }
 }
 
 public class OrderServiceStubTest {
 
     @Test
-    void testStubAlwaysSucceeds() {
-        PaymentProcessorStub stub = new PaymentProcessorStub();
-        boolean result = stub.process(200f);
+    void testOrderStubReturnsPendingOrder() {
+        OrderServiceStub stub = new OrderServiceStub();
+        Order order = stub.getSampleOrder();
 
-        assertTrue(result, "Stub should always return true");
+        assertEquals("Pending", order.getStatus());
+        assertTrue(order.getDate().isBefore(LocalDateTime.now().plusSeconds(1)));
+    }
+
+    @Test
+    void testConfirmOrderChangesStatus() {
+        Order order = new Order(2, 3000f);
+        order.confirmOrder();
+        assertEquals("Confirmed", order.getStatus());
     }
 }
