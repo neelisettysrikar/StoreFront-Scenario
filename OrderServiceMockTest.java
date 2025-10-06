@@ -1,24 +1,29 @@
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
-
-class PaymentProcessor {
-    boolean process(float amount) {
-        return true;
-    }
-}
+import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceMockTest {
 
     @Test
-    void testPaymentProcessWithMock() {
-        PaymentProcessor processor = mock(PaymentProcessor.class);
-        when(processor.process(anyFloat())).thenReturn(true);
+    void testMockOrderConfirmation() {
+        Order mockOrder = Mockito.mock(Order.class);
 
-        Order order = new Order(1, 100f);
-        boolean result = processor.process(order.getTotalAmount());
+        when(mockOrder.getStatus()).thenReturn("Pending").thenReturn("Confirmed");
 
-        assertTrue(result);
-        verify(processor).process(100f);
+        // simulate confirmOrder() call
+        mockOrder.confirmOrder();
+
+        assertEquals("Confirmed", mockOrder.getStatus());
+        verify(mockOrder).confirmOrder();
+    }
+
+    @Test
+    void testMockTotalAmount() {
+        Order mockOrder = Mockito.mock(Order.class);
+        when(mockOrder.getTotalAmount()).thenReturn(5000f);
+
+        assertEquals(5000f, mockOrder.getTotalAmount());
+        verify(mockOrder).getTotalAmount();
     }
 }
