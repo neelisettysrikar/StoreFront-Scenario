@@ -6,7 +6,10 @@ public class Cart {
     private float totalPrice;
     private List<Product> items = new ArrayList<>();
 
-    public Cart() {} // default constructor
+    public Cart() {
+        this.cartID = 0;
+        this.totalPrice = 0;
+    }
 
     public Cart(int cartID) {
         this.cartID = cartID;
@@ -22,11 +25,15 @@ public class Cart {
         calculateTotal();
     }
 
-    public void calculateTotal() {
+    private void calculateTotal() {
         totalPrice = 0;
         for (Product p : items) {
             totalPrice += p.getPrice();
         }
+    }
+
+    public int getItemCount() {
+        return items.size();
     }
 
     public float getTotalPrice() {
@@ -35,9 +42,5 @@ public class Cart {
 
     public List<Product> getItems() {
         return items;
-    }
-
-    public int getItemCount() {
-        return items.size();
     }
 }
