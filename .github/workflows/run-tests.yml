@@ -8,7 +8,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Compile and Run Tests
         run: |
-          javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-core-5.4.0.jar *.java
-          java -jar junit-platform-console-standalone-1.9.3.jar -cp . --scan-class-path
+          # Create output directory for class files
+          mkdir -p out
+          
+          # Compile all Java files with classpath including JUnit + Mockito JARs
+          javac -cp ".:lib/junit-platform-console-standalone-1.9.3.jar:lib/mockito-core-5.4.0.jar" -d out *.java
+          
+          # Run all tests using the JUnit Console Launcher
+          java -jar lib/junit-platform-console-standalone-1.9.3.jar -cp "out:lib/mockito-core-5.4.0.jar" --scan-class-path
