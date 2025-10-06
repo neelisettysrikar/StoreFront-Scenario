@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Product {
 
     private int productID;
@@ -14,19 +16,19 @@ public class Product {
         this.stock = stock;
     }
 
-    public int getStock() {
-        return stock;
+    public int getProductID() {
+        return productID;
     }
 
     public float getPrice() {
         return price;
     }
 
-    public void updateStock(int newStock) {
-        this.stock = newStock;
+    public void updateStock(int amount) {
+        this.stock += amount;
     }
 
     public String getDetails() {
-        return name + " - " + description + " ($" + price + ")";
+        return name + " - " + description + " - $" + price;
     }
 }
