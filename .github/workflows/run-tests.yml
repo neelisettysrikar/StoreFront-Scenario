@@ -1,32 +1,22 @@
 name: Run StoreFront Tests
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-      - name: Download JUnit and Mockito
-        run: |
-          wget -q https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
-          wget -q https://repo1.maven.org/maven2/org/mockito/mockito-core/5.10.0/mockito-core-5.10.0.jar
+    - name: Compile
+      run: javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-core-5.4.0.jar *.java
 
-      - name: Compile Java files
-        run: |
-          javac -cp ".:junit-platform-console-standalone-1.10.0.jar:mockito-core-5.10.0.jar" *.java
-
-      - name: Run JUnit tests
-        run: |
-          java -jar junit-platform-console-standalone-1.10.0.jar --class-path ".:mockito-core-5.10.0.jar" --scan-class-path
+    - name: Run Tests
+      run: java -jar junit-platform-console-standalone-1.9.3.jar -cp .:mockito-core-5.4.0.jar --scan-class-path
