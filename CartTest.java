@@ -1,18 +1,30 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
 
     @Test
-    void testAddAndCalculateTotal() {
-        Cart cart = new Cart();
-        Product p1 = new Product(1, "Laptop", "Dell XPS", 1000f, 10);
-        Product p2 = new Product(2, "Mouse", "Logitech", 50f, 20);
+    void testAddItemIncreasesTotalPrice() {
+        Cart cart = new Cart(1);
+        Product p1 = new Product(101, "Phone", "Android Phone", 15000f, 5);
+        cart.addItem(p1);
+        assertEquals(15000f, cart.getTotalPrice());
+    }
 
+    @Test
+    void testRemoveItemDecreasesTotalPrice() {
+        Cart cart = new Cart(1);
+        Product p1 = new Product(101, "Phone", "Android Phone", 15000f, 5);
+        Product p2 = new Product(102, "Laptop", "Gaming Laptop", 80000f, 2);
         cart.addItem(p1);
         cart.addItem(p2);
+        cart.removeItem(p1);
+        assertEquals(80000f, cart.getTotalPrice());
+    }
 
-        assertEquals(2, cart.getItemCount());
-        assertEquals(1050f, cart.getTotalPrice());
+    @Test
+    void testEmptyCartHasZeroTotal() {
+        Cart cart = new Cart(1);
+        assertEquals(0f, cart.getTotalPrice());
     }
 }
