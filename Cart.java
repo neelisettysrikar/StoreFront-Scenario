@@ -6,6 +6,8 @@ public class Cart {
     private float totalPrice;
     private List<Product> items = new ArrayList<>();
 
+    public Cart() {} // default constructor
+
     public Cart(int cartID) {
         this.cartID = cartID;
     }
@@ -33,5 +35,9 @@ public class Cart {
 
     public List<Product> getItems() {
         return items;
+    }
+
+    public int getItemCount() {
+        return items.size();
     }
 }
