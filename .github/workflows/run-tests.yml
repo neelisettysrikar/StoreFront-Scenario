@@ -1,0 +1,22 @@
+name: Run StoreFront Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Compile
+      run: javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-core-5.4.0.jar *.java
+
+    - name: Run Tests
+      run: java -jar junit-platform-console-standalone-1.9.3.jar -cp .:mockito-core-5.4.0.jar --scan-class-path
