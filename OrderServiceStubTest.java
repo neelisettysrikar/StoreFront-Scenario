@@ -1,21 +1,34 @@
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-class OrderServiceStubTest {
+// Stub payment processor that always succeeds
+class PaymentProcessorStub {
+    boolean process(float amount) {
+        return true;
+    }
+}
 
-    class PaymentStub implements PaymentProcessor {
-        @Override
-        public boolean process(double amount) {
-            return true; // always succeeds
-        }
+class OrderService {
+    private PaymentProcessorStub paymentProcessor;
+
+    public OrderService(PaymentProcessorStub paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
     }
 
-    @Test
-    void testOrderSucceedsUsingStub() {
-        Cart cart = new Cart();
-        cart.addProduct(new Product("Book", 20.0));
-        OrderService orderService = new OrderService(new PaymentStub());
+    public boolean placeOrder(Order order) {
+        return paymentProcessor.process(order.getTotalAmount());
+    }
+}
 
-        assertTrue(orderService.placeOrder(cart));
+public class OrderServiceStubTest {
+
+    @Test
+    void testOrderProcessedWithStub() {
+        PaymentProcessorStub stub = new PaymentProcessorStub();
+        OrderService service = new OrderService(stub);
+        Order order = new Order(1, 500f);
+
+        boolean result = service.placeOrder(order);
+        assertTrue(result, "Stub should always return true");
     }
 }
