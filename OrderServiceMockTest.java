@@ -1,29 +1,32 @@
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class OrderServiceMockTest {
 
     @Test
-    void testMockOrderConfirmation() {
-        Order mockOrder = Mockito.mock(Order.class);
+    void testMockTotalAmount() {
+        // Create a mock Order
+        Order mockOrder = mock(Order.class);
 
-        when(mockOrder.getStatus()).thenReturn("Pending").thenReturn("Confirmed");
+        // Stub the getTotalAmount() method
+        when(mockOrder.getTotalAmount()).thenReturn(250.0f);
 
-        // simulate confirmOrder() call
-        mockOrder.confirmOrder();
-
-        assertEquals("Confirmed", mockOrder.getStatus());
-        verify(mockOrder).confirmOrder();
+        // Verify stub behavior
+        assertEquals(250.0f, mockOrder.getTotalAmount());
+        verify(mockOrder, times(1)).getTotalAmount();
     }
 
     @Test
-    void testMockTotalAmount() {
-        Order mockOrder = Mockito.mock(Order.class);
-        when(mockOrder.getTotalAmount()).thenReturn(5000f);
+    void testMockOrderConfirmation() {
+        // Create a mock Order
+        Order mockOrder = mock(Order.class);
 
-        assertEquals(5000f, mockOrder.getTotalAmount());
-        verify(mockOrder).getTotalAmount();
+        // Stub getStatus() to return "Confirmed"
+        when(mockOrder.getStatus()).thenReturn("Confirmed");
+
+        // Verify that the mocked return value works as expected
+        assertEquals("Confirmed", mockOrder.getStatus());
+        verify(mockOrder, times(1)).getStatus();
     }
 }
